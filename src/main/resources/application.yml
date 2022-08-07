@@ -1,0 +1,41 @@
+server:
+  port: 8080
+  tomcat:
+    basedir: ${user.dir}
+    threads:
+      max: 30
+
+spring:
+
+  application:
+    name: citylist-server
+
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
+  datasource:
+    hikari:
+      jdbcUrl: jdbc:h2:mem:citydb
+      username: sa
+      password:
+      driverClassName: org.h2.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+#    hibernate:
+#      ddl-auto: create-drop
+
+    generate-ddl: true
+    show-sql: true
+
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.xml
+  messages:
+    basename: messages,defaults/messages
+
+
