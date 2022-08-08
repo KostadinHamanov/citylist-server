@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.citylist.server.config.Constants.DEFAULT_PAGE_NUMBER;
-import static com.citylist.server.config.Constants.DEFAULT_PAGE_SIZE;
+import static com.citylist.server.config.Constants.*;
 
 @Service
 public class CityService {
@@ -26,11 +25,16 @@ public class CityService {
     public CityService() {
     }
 
-    public Page<CityDTO> getAllCities(Optional<Integer> page, Optional<Integer> size) {
-        //TODO - Add check for negative values
+    public Page<CityDTO> getAllCities(Optional<Integer> page, Optional<Integer> size, Optional<String> name) {
+        Page<City> cities;
 
-        Page<City> allCities = cityRepository.findAll(PageRequest.of(page.orElse(DEFAULT_PAGE_NUMBER), size.orElse(DEFAULT_PAGE_SIZE)));
+        if (name.isPresent()) {
+            cities = (Page<City>) cityRepository.findByNameContainingIgnoreCase(name.orElse(DEFAULT_CITY_NAME),
+                    PageRequest.of(page.orElse(DEFAULT_PAGE_NUMBER), size.orElse(DEFAULT_PAGE_SIZE)));
+        } else {
+            cities = (Page<City>) cityRepository.findAll(PageRequest.of(page.orElse(DEFAULT_PAGE_NUMBER), size.orElse(DEFAULT_PAGE_SIZE)));
+        }
 
-        return allCities.map(cityMapper::mapEntityToDTO);
+        return cities.map(cityMapper::mapEntityToDTO);
     }
 }

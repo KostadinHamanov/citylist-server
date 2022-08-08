@@ -23,16 +23,19 @@ public class CityController {
     }
 
     /**
-     * This API provides a list of all cities with a corresponding photo for each. Supports pagination.
-     * @param page - offset. Default value is used if no page is set
-     * @param size - number of cities per single page. Default value is used if no size is set
+     * This API provides a list of all cities with a corresponding photo for each.
+     * Supports pagination and searcing by city name
+     * @param page - pagination param - offset. Default value is used if no page is set
+     * @param size - pagination param - number of cities per single page. Default value is used if no size is set
+     * @param name - request param to search by city name (case insensitive)
      * @return a list of cities and metadata about all the cities
      */
     @GetMapping("/cities")
     public ResponseEntity<Page<CityDTO>> getAllCities(@RequestParam Optional<Integer> page,
-                                                      @RequestParam Optional<Integer> size) {
+                                                      @RequestParam Optional<Integer> size,
+                                                      @RequestParam Optional<String> name) {
 
-        return ResponseEntity.ok(cityService.getAllCities(page, size));
+        return ResponseEntity.ok(cityService.getAllCities(page, size, name));
     }
 
 }
