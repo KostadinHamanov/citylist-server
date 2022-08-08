@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "0534c342-01d3-47ce-a145-07b68680611f",
+		"name": "City List app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get cities - pages, by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cities?size=3&name=sofia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cities"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "3"
+						},
+						{
+							"key": "name",
+							"value": "sofia"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
