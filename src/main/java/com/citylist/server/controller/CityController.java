@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Controller
 @RequestMapping("")
@@ -37,5 +38,24 @@ public class CityController {
 
         return ResponseEntity.ok(cityService.getAllCities(page, size, name));
     }
+
+    /**
+     *
+     * @param id
+     * @param city
+     * @return
+     */
+    @PutMapping("/cities/{id}")
+    public ResponseEntity<CityDTO> updateCity(@PathVariable Long id,
+                                              @RequestBody CityDTO city) {
+
+        if (id == null) {
+            throw new ResponseStatusException(BAD_REQUEST);
+        }
+
+        return ResponseEntity.ok(cityService.updateCity(id, city));
+    }
+
+
 
 }

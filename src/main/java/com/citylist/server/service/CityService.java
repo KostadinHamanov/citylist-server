@@ -7,11 +7,15 @@ import com.citylist.server.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
 import static com.citylist.server.config.Constants.*;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 public class CityService {
@@ -36,5 +40,27 @@ public class CityService {
         }
 
         return cities.map(cityMapper::mapEntityToDTO);
+    }
+
+    public CityDTO updateCity(Long id, CityDTO newCityDTO) {
+        Optional<City> city = cityRepository.findById(id);
+        if (!city.isPresent()) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
+
+        city.get().setName(newCityDTO.getName());
+        city.get().setPhoto(newCityDTO.getPhoto());
+
+        City savedEnt = cityRepository.save(city.get());
+
+        return cityMapper.mapEntityToDTO(savedEnt);
+
+//        return cityRepository.findById(id).map(city -> {
+//            city.setName(newCity.getName());
+//            city.setPhoto(newCity.getPhoto());
+//
+//            return cityRepository.save(cityMapper.mapDTOToEntity(newCity));
+//        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id %d not found", id)));
+
     }
 }
