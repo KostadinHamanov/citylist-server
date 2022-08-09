@@ -40,22 +40,17 @@ public class CityController {
     }
 
     /**
-     *
-     * @param id
-     * @param city
-     * @return
+     * This API updates the city info - ex. name, photo
+     * @param id - id of the city to be updated
+     * @param city - new data model of the city
+     * @return - updated city
      */
     @PutMapping("/cities/{id}")
     public ResponseEntity<CityDTO> updateCity(@PathVariable Long id,
                                               @RequestBody CityDTO city) {
-
         if (id == null) {
             throw new ResponseStatusException(BAD_REQUEST);
         }
-
         return ResponseEntity.ok(cityService.updateCity(id, city));
     }
-
-
-
 }
