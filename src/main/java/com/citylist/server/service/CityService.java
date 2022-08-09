@@ -43,24 +43,15 @@ public class CityService {
     }
 
     public CityDTO updateCity(Long id, CityDTO newCityDTO) {
-        Optional<City> city = cityRepository.findById(id);
-        if (!city.isPresent()) {
+        if (cityRepository.findById(id).isPresent()) {
+            City city = cityRepository.findById(id).get();
+            city.setName(newCityDTO.getName());
+            city.setPhoto(newCityDTO.getPhoto());
+
+            City updated = cityRepository.save(city);
+            return cityMapper.mapEntityToDTO(updated);
+        } else {
             throw new ResponseStatusException(NOT_FOUND);
         }
-
-        city.get().setName(newCityDTO.getName());
-        city.get().setPhoto(newCityDTO.getPhoto());
-
-        City savedEnt = cityRepository.save(city.get());
-
-        return cityMapper.mapEntityToDTO(savedEnt);
-
-//        return cityRepository.findById(id).map(city -> {
-//            city.setName(newCity.getName());
-//            city.setPhoto(newCity.getPhoto());
-//
-//            return cityRepository.save(cityMapper.mapDTOToEntity(newCity));
-//        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id %d not found", id)));
-
     }
 }
