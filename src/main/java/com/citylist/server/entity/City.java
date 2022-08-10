@@ -1,7 +1,10 @@
 package com.citylist.server.entity;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 
+@Builder
 @Entity(name = "city")
 public class City {
 
@@ -14,6 +17,11 @@ public class City {
     private String photo;
 
     public City() {
+    }
+
+    public City(String name, String photo) {
+        this.name = name;
+        this.photo = photo;
     }
 
     public City(Long id, String name, String photo) {
