@@ -47,8 +47,8 @@ public class CityServiceImpl implements CityService {
             city.setName(newCityDTO.getName());
             city.setPhoto(newCityDTO.getPhoto());
 
-            City updated = cityRepository.save(city);
-            return cityMapper.mapEntityToDTO(updated);
+            cityRepository.save(city);
+            return cityMapper.mapEntityToDTO(city);
         } else {
             throw new ResponseStatusException(NOT_FOUND);
         }
