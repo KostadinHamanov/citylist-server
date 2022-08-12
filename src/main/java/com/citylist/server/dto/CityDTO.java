@@ -1,30 +1,15 @@
-package com.citylist.server.entity;
+package com.citylist.server.dto;
 
-import lombok.Builder;
+public class CityDTO {
 
-import javax.persistence.*;
-
-@Builder
-@Entity(name = "city")
-public class City {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
-
     private String name;
     private String photo;
 
-    public City() {
+    public CityDTO() {
     }
 
-    public City(String name, String photo) {
-        this.name = name;
-        this.photo = photo;
-    }
-
-    public City(Long id, String name, String photo) {
+    public CityDTO(Long id, String name, String photo) {
         this.id = id;
         this.name = name;
         this.photo = photo;
