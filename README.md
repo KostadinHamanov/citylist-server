@@ -17,3 +17,11 @@ Technical clarification
 -  any database
 - any frontend stack
 - Usage of Spring Data REST is prohibited
+
+### How to run the project
+1. Checkout the project
+2. Build (mvn)
+3. Start the app
+4. Use the Postman collection from resources/postman to test the APIs
+   GET http://localhost:8080/cities (Query params: page, size, name)
+   PUT http://localhost:8080/cities/{cityId}
