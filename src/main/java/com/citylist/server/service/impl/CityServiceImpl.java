@@ -32,10 +32,10 @@ public class CityServiceImpl implements CityService {
         Page<City> cities;
 
         if (name.isPresent()) {
-            cities = (Page<City>) cityRepository.findByNameContainingIgnoreCase(name.orElse(DEFAULT_CITY_NAME),
+            cities = cityRepository.findByNameContainingIgnoreCase(name.orElse(DEFAULT_CITY_NAME),
                     PageRequest.of(page.orElse(DEFAULT_PAGE_NUMBER), size.orElse(DEFAULT_PAGE_SIZE)));
         } else {
-            cities = (Page<City>) cityRepository.findAll(PageRequest.of(page.orElse(DEFAULT_PAGE_NUMBER), size.orElse(DEFAULT_PAGE_SIZE)));
+            cities = cityRepository.findAll(PageRequest.of(page.orElse(DEFAULT_PAGE_NUMBER), size.orElse(DEFAULT_PAGE_SIZE)));
         }
 
         return cities.map(cityMapper::mapEntityToDTO);
